@@ -1,6 +1,6 @@
 # GTA V Decompiled Scripts 
 
-Decompiled Scripts For Legacy and E&E
+Decompiled Scripts For Legacy
 
 All decompiled .ysc game scripts, including native tables.
 
@@ -18,7 +18,7 @@ A Special Thanks to **Sainan**.
 4. Press Ctrl+A then right-click and select "extract" to extract all scripts into the "raw_scripts" folder.
 5. Download the background script from `http://prod.cloud.rockstargames.com/titles/gta5/pcros/bgscripts/bg_ng_xxxx_y.rpf` where `xxxx_y` equals your the game build, e.g. [`bg_ng_2628_0.rpf`](http://prod.cloud.rockstargames.com/titles/gta5/pcros/bgscripts/bg_ng_2628_0.rpf) for build 2628, and extract "valentinerpreward2" via OpenIV and copy it to ``raw scripts``.
 6. Open a terminal in the folder where you just copied the raw scripts. And execute the following command:
-   (Use HEX EDITOR to Find 0B or 0C is present) -- Note
+   (Use HxD EDITOR to Find 0B or 0C is present) -- Note
     ```
     sfk rep -binary /525343370B/525343370A/ -dir . -file .ysc
     --> replace byte: 0xB with 0xA
