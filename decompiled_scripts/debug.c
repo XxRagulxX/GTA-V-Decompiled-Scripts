@@ -16,7 +16,7 @@
 	var uLocal_14 = 0;
 	var uLocal_15 = 0;
 	int iLocal_16 = 0;
-	char* sLocal_17 = NULL;
+	char* sLocal_17 = 0;
 	var uLocal_18 = 0;
 	var uLocal_19 = 0;
 	var uLocal_20 = 0;
@@ -66,7 +66,7 @@
 	var uLocal_64 = 0;
 #endregion
 
-void __EntryFunction__()
+void main() // Position - 0x0 (0)
 {
 	iLocal_0 = 3;
 	iLocal_3 = 1;
@@ -92,7 +92,8 @@ void __EntryFunction__()
 	iLocal_38 = 65;
 	iLocal_39 = 49;
 	iLocal_40 = 64;
-	fLocal_61 = ((0.05f + 0.275f) - 0.01f);
+	fLocal_61 = (0.05f + 0.275f) - 0.01f;
 	fLocal_63 = 0f;
+	return;
 }
 

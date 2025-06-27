@@ -17,7 +17,7 @@
 	int iLocal_15 = 0;
 #endregion
 
-void __EntryFunction__()
+void main() // Position - 0x0 (0)
 {
 	iLocal_2 = 1;
 	iLocal_3 = 134;
@@ -32,9 +32,12 @@ void __EntryFunction__()
 	fLocal_12 = 0.001f;
 	iLocal_15 = -1;
 	MISC::NETWORK_SET_SCRIPT_IS_SAFE_FOR_NETWORK_GAME();
+
 	while (true)
 	{
-		SYSTEM::WAIT(0);
+		BUILTIN::WAIT(0);
 	}
+
+	return;
 }
 

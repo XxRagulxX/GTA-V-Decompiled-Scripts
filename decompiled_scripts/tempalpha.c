@@ -18,7 +18,7 @@
 	var uLocal_16 = 0;
 	var uLocal_17 = 0;
 	var uLocal_18 = 0;
-	char* sLocal_19 = NULL;
+	char* sLocal_19 = 0;
 	var uLocal_20 = 0;
 	var uLocal_21 = 0;
 	float fLocal_22 = 0f;
@@ -93,7 +93,7 @@
 	int iLocal_91 = 0;
 #endregion
 
-void __EntryFunction__()
+void main() // Position - 0x0 (0)
 {
 	iLocal_2 = 1;
 	iLocal_3 = 134;
@@ -121,5 +121,6 @@ void __EntryFunction__()
 	iLocal_86 = 64;
 	iLocal_90 = HUD::GET_STANDARD_BLIP_ENUM_ID();
 	iLocal_91 = HUD::GET_WAYPOINT_BLIP_ENUM_ID();
+	return;
 }
 

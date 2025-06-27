@@ -17,7 +17,7 @@
 	int iLocal_15 = 0;
 	var uLocal_16 = 0;
 	var uLocal_17 = 0;
-	char* sLocal_18 = NULL;
+	char* sLocal_18 = 0;
 	float fLocal_19 = 0f;
 	var uLocal_20 = 0;
 	var uLocal_21 = 0;
@@ -27,7 +27,7 @@
 	var uLocal_25 = 0;
 #endregion
 
-void __EntryFunction__()
+void main() // Position - 0x0 (0)
 {
 	iLocal_2 = 1;
 	iLocal_3 = 134;
@@ -45,88 +45,96 @@ void __EntryFunction__()
 	fLocal_19 = 0f;
 	fLocal_23 = -0.0375f;
 	fLocal_24 = 0.17f;
+
 	if (PLAYER::HAS_FORCE_CLEANUP_OCCURRED(67))
 	{
 		if (PLAYER::GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP() != 2)
-		{
 			func_4(19);
-		}
+	
 		func_3();
 	}
+
 	func_2(19);
 	AUDIO::REGISTER_SCRIPT_WITH_AUDIO(1);
+
 	while (!AUDIO::LOAD_STREAM("CONSTRUCTION_SITE_STREAM", "FBI_HEIST_SOUNDSET"))
 	{
-		SYSTEM::WAIT(0);
+		BUILTIN::WAIT(0);
 	}
+
 	AUDIO::PLAY_STREAM_FROM_POSITION(-147f, -1005f, 28f);
+
 	while (func_1(70))
 	{
-		SYSTEM::WAIT(0);
+		BUILTIN::WAIT(0);
 	}
+
 	func_4(19);
 	func_3();
+	return;
 }
 
-int func_1(int iParam0)
+BOOL func_1(int iParam0) // Position - 0xB6 (182)
 {
 	if (iParam0 == 146 || iParam0 == -1)
-	{
-		return 0;
-	}
-	return Global_114344.f_9089.f_99.f_58[iParam0];
+		return false;
+
+	return Global_114370.f_9089.f_99.f_58[iParam0];
 }
 
-int func_2(int iParam0)
+int func_2(int iParam0) // Position - 0xE3 (227)
 {
-	int iVar0;
-	bool bVar1;
-	
+	int num;
+	int offset;
+
 	if (iParam0 <= 31)
 	{
-		iVar0 = 9;
-		bVar1 = iParam0;
+		num = 9;
+		offset = iParam0;
 	}
 	else
 	{
-		iVar0 = 10;
-		bVar1 = (iParam0 - 32);
+		num = 10;
+		offset = iParam0 - 32;
 	}
-	if (BitTest(Global_114344.f_9089.f_99.f_219[iVar0], bVar1))
-	{
+
+	if (IS_BIT_SET(Global_114370.f_9089.f_99.f_219[num], offset))
 		return 0;
-	}
-	MISC::SET_BIT(&(Global_114344.f_9089.f_99.f_219[iVar0]), bVar1);
+
+	MISC::SET_BIT(&Global_114370.f_9089.f_99.f_219[num], offset);
 	return 1;
 }
 
-void func_3()
+void func_3() // Position - 0x13A (314)
 {
 	AUDIO::STOP_STREAM();
 	AUDIO::UNREGISTER_SCRIPT_WITH_AUDIO();
 	SCRIPT::TERMINATE_THIS_THREAD();
+	return;
 }
 
-int func_4(int iParam0)
+int func_4(int iParam0) // Position - 0x14E (334)
 {
-	int iVar0;
-	bool bVar1;
-	
+	int num;
+	int offset;
+
 	if (iParam0 <= 31)
 	{
-		iVar0 = 9;
-		bVar1 = iParam0;
+		num = 9;
+		offset = iParam0;
 	}
 	else
 	{
-		iVar0 = 10;
-		bVar1 = (iParam0 - 32);
+		num = 10;
+		offset = iParam0 - 32;
 	}
-	if (BitTest(Global_114344.f_9089.f_99.f_219[iVar0], bVar1))
+
+	if (IS_BIT_SET(Global_114370.f_9089.f_99.f_219[num], offset))
 	{
-		MISC::CLEAR_BIT(&(Global_114344.f_9089.f_99.f_219[iVar0]), bVar1);
+		MISC::CLEAR_BIT(&Global_114370.f_9089.f_99.f_219[num], offset);
 		return 1;
 	}
+
 	return 0;
 }
 

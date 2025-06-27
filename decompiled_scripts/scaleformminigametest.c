@@ -16,37 +16,37 @@
 	var uLocal_14 = 0;
 	int iLocal_15 = 0;
 	int iLocal_16 = 0;
-	int iLocal_17 = 0;
-	int iLocal_18 = 0;
+	Cam caLocal_17 = 0;
+	Blip blLocal_18 = 0;
 	int iLocal_19 = 0;
 	int iLocal_20 = 0;
-	bool bLocal_21 = 0;
-	bool bLocal_22 = 0;
+	BOOL bLocal_21 = 0;
+	BOOL bLocal_22 = 0;
 	float fLocal_23 = 0f;
-	bool bLocal_24 = 0;
-	bool bLocal_25 = 0;
+	BOOL bLocal_24 = 0;
+	BOOL bLocal_25 = 0;
 	float fLocal_26 = 0f;
-	bool bLocal_27 = 0;
-	bool bLocal_28 = 0;
+	BOOL bLocal_27 = 0;
+	BOOL bLocal_28 = 0;
 	float fLocal_29 = 0f;
-	bool bLocal_30 = 0;
-	bool bLocal_31 = 0;
+	BOOL bLocal_30 = 0;
+	BOOL bLocal_31 = 0;
 	float fLocal_32 = 0f;
-	bool bLocal_33 = 0;
-	bool bLocal_34 = 0;
+	BOOL bLocal_33 = 0;
+	BOOL bLocal_34 = 0;
 	float fLocal_35 = 0f;
-	bool bLocal_36 = 0;
-	bool bLocal_37 = 0;
+	BOOL bLocal_36 = 0;
+	BOOL bLocal_37 = 0;
 	float fLocal_38 = 0f;
-	bool bLocal_39 = 0;
-	bool bLocal_40 = 0;
+	BOOL bLocal_39 = 0;
+	BOOL bLocal_40 = 0;
 	float fLocal_41 = 0f;
-	bool bLocal_42 = 0;
-	bool bLocal_43 = 0;
+	BOOL bLocal_42 = 0;
+	BOOL bLocal_43 = 0;
 	float fLocal_44 = 0f;
 #endregion
 
-void __EntryFunction__()
+void main() // Position - 0x0 (0)
 {
 	iLocal_2 = 1;
 	iLocal_3 = 134;
@@ -60,7 +60,7 @@ void __EntryFunction__()
 	iLocal_11 = 12;
 	fLocal_12 = 0.001f;
 	iLocal_15 = -1;
-	iLocal_18 = HUD::ADD_BLIP_FOR_COORD(100f, 100f, 30f);
+	blLocal_18 = HUD::ADD_BLIP_FOR_COORD(100f, 100f, 30f);
 	iLocal_20 = 1;
 	fLocal_23 = 0f;
 	fLocal_26 = 0f;
@@ -70,75 +70,84 @@ void __EntryFunction__()
 	fLocal_38 = 0f;
 	fLocal_41 = 0f;
 	fLocal_44 = 0f;
+
 	if (CAM::IS_SCREEN_FADED_OUT())
-	{
 		CAM::DO_SCREEN_FADE_IN(500);
-	}
+
 	if (PLAYER::HAS_FORCE_CLEANUP_OCCURRED(3))
-	{
 		func_2();
-	}
+
 	iLocal_16 = GRAPHICS::REQUEST_SCALEFORM_MOVIE("p_bubblegum");
+
 	while (!GRAPHICS::HAS_SCALEFORM_MOVIE_LOADED(iLocal_16))
 	{
-		SYSTEM::WAIT(0);
+		BUILTIN::WAIT(0);
 	}
+
 	while (true)
 	{
-		if (iLocal_19 == 1)
-		{
-		}
+		iLocal_19 == 1;
+	
 		if (iLocal_20 == 1)
 		{
 			iLocal_20 = 0;
-			iLocal_17 = CAM::CREATE_CAM("DEFAULT_SCRIPTED_CAMERA", true);
-			if (CAM::DOES_CAM_EXIST(iLocal_17))
+			caLocal_17 = CAM::CREATE_CAM("DEFAULT_SCRIPTED_CAMERA", true);
+		
+			if (CAM::DOES_CAM_EXIST(caLocal_17))
 			{
-				CAM::SET_CAM_PARAMS(iLocal_17, -160.6632f, -1072.144f, -1615.471f, -89.4999f, -0.2863f, 58.1189f, 45f, 0, 1, 1, 2);
-				CAM::SET_CAM_NEAR_CLIP(iLocal_17, 0.01f);
-				CAM::SET_CAM_FAR_CLIP(iLocal_17, 0.02f);
+				CAM::SET_CAM_PARAMS(caLocal_17, -160.6632f, -1072.1438f, -1615.471f, -89.4999f, -0.2863f, 58.1189f, 45f, 0, 1, 1, 2);
+				CAM::SET_CAM_NEAR_CLIP(caLocal_17, 0.01f);
+				CAM::SET_CAM_FAR_CLIP(caLocal_17, 0.02f);
 				CAM::RENDER_SCRIPT_CAMS(true, false, 3000, true, false, 0);
 			}
-			HUD::SET_BLIP_SPRITE(iLocal_18, 66);
+		
+			HUD::SET_BLIP_SPRITE(blLocal_18, BLIP_RANDOM_CHARACTER);
 		}
+	
 		iLocal_19 = 1;
 		GRAPHICS::DRAW_SCALEFORM_MOVIE(iLocal_16, 0.5f, 0.5f, 1f, 1f, 255, 255, 255, 0, 0);
 		func_1(iLocal_16);
-		SYSTEM::WAIT(0);
+		BUILTIN::WAIT(0);
 	}
+
+	return;
 }
 
-void func_1(int iParam0)
+void func_1(int iParam0) // Position - 0x13F (319)
 {
-	if (Global_21201 == 0)
+	if (Global_21218 == 0)
 	{
-		if (PAD::IS_CONTROL_PRESSED(2, 189) || PAD::IS_CONTROL_PRESSED(2, 190))
+		if (PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_LEFT) || PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_RIGHT))
 		{
-			Global_21201 = 1;
-			SYSTEM::SETTIMERA(0);
+			Global_21218 = 1;
+			BUILTIN::SETTIMERA(0);
 		}
 	}
-	else if (SYSTEM::TIMERA() > 50)
+	else if (BUILTIN::TIMERA() > 50)
 	{
-		Global_21201 = 0;
+		Global_21218 = 0;
 	}
-	if (Global_21201 == 0)
+
+	if (Global_21218 == 0)
 	{
-		if (PAD::IS_CONTROL_JUST_PRESSED(2, 189))
+		if (PAD::IS_CONTROL_JUST_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_LEFT))
 		{
 			bLocal_21 = true;
 			fLocal_23 = 1f;
 		}
-		if (PAD::IS_CONTROL_PRESSED(2, 189))
+	
+		if (PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_LEFT))
 		{
 			bLocal_21 = true;
 			fLocal_23 = 1f;
 		}
-		if (!PAD::IS_CONTROL_PRESSED(2, 189))
+	
+		if (!PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_LEFT))
 		{
 			bLocal_21 = false;
 			fLocal_23 = 0f;
 		}
+	
 		if (!bLocal_21 == bLocal_22)
 		{
 			bLocal_22 = bLocal_21;
@@ -147,21 +156,25 @@ void func_1(int iParam0)
 			GRAPHICS::SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(fLocal_23);
 			GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
 		}
-		if (PAD::IS_CONTROL_JUST_PRESSED(2, 190))
+	
+		if (PAD::IS_CONTROL_JUST_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_RIGHT))
 		{
 			bLocal_24 = true;
 			fLocal_26 = 1f;
 		}
-		if (PAD::IS_CONTROL_PRESSED(2, 190))
+	
+		if (PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_RIGHT))
 		{
 			bLocal_24 = true;
 			fLocal_26 = 1f;
 		}
-		if (!PAD::IS_CONTROL_PRESSED(2, 190))
+	
+		if (!PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_RIGHT))
 		{
 			bLocal_24 = false;
 			fLocal_26 = 0f;
 		}
+	
 		if (!bLocal_24 == bLocal_25)
 		{
 			bLocal_25 = bLocal_24;
@@ -170,21 +183,25 @@ void func_1(int iParam0)
 			GRAPHICS::SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(fLocal_26);
 			GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
 		}
-		if (PAD::IS_CONTROL_JUST_PRESSED(2, 188))
+	
+		if (PAD::IS_CONTROL_JUST_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_UP))
 		{
 			bLocal_27 = true;
 			fLocal_29 = 1f;
 		}
-		if (PAD::IS_CONTROL_PRESSED(2, 188))
+	
+		if (PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_UP))
 		{
 			bLocal_27 = true;
 			fLocal_29 = 1f;
 		}
-		if (!PAD::IS_CONTROL_PRESSED(2, 188))
+	
+		if (!PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_UP))
 		{
 			bLocal_27 = false;
 			fLocal_29 = 0f;
 		}
+	
 		if (!bLocal_27 == bLocal_28)
 		{
 			bLocal_28 = bLocal_27;
@@ -193,21 +210,25 @@ void func_1(int iParam0)
 			GRAPHICS::SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(fLocal_29);
 			GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
 		}
-		if (PAD::IS_CONTROL_JUST_PRESSED(2, 187))
+	
+		if (PAD::IS_CONTROL_JUST_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_DOWN))
 		{
 			bLocal_30 = true;
 			fLocal_32 = 1f;
 		}
-		if (PAD::IS_CONTROL_PRESSED(2, 187))
+	
+		if (PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_DOWN))
 		{
 			bLocal_30 = true;
 			fLocal_32 = 1f;
 		}
-		if (!PAD::IS_CONTROL_PRESSED(2, 187))
+	
+		if (!PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_DOWN))
 		{
 			bLocal_30 = false;
 			fLocal_32 = 0f;
 		}
+	
 		if (!bLocal_30 == bLocal_31)
 		{
 			bLocal_31 = bLocal_30;
@@ -216,21 +237,25 @@ void func_1(int iParam0)
 			GRAPHICS::SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(fLocal_32);
 			GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
 		}
-		if (PAD::IS_CONTROL_JUST_PRESSED(2, 202))
+	
+		if (PAD::IS_CONTROL_JUST_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_CANCEL))
 		{
 			bLocal_33 = true;
 			fLocal_35 = 1f;
 		}
-		if (PAD::IS_CONTROL_PRESSED(2, 202))
+	
+		if (PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_CANCEL))
 		{
 			bLocal_33 = true;
 			fLocal_35 = 1f;
 		}
-		if (!PAD::IS_CONTROL_PRESSED(2, 202))
+	
+		if (!PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_CANCEL))
 		{
 			bLocal_33 = false;
 			fLocal_35 = 0f;
 		}
+	
 		if (!bLocal_33 == bLocal_34)
 		{
 			bLocal_34 = bLocal_33;
@@ -239,21 +264,25 @@ void func_1(int iParam0)
 			GRAPHICS::SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(fLocal_35);
 			GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
 		}
-		if (PAD::IS_CONTROL_JUST_PRESSED(2, 204))
+	
+		if (PAD::IS_CONTROL_JUST_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_Y))
 		{
 			bLocal_36 = true;
 			fLocal_38 = 1f;
 		}
-		if (PAD::IS_CONTROL_PRESSED(2, 204))
+	
+		if (PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_Y))
 		{
 			bLocal_36 = true;
 			fLocal_38 = 1f;
 		}
-		if (!PAD::IS_CONTROL_PRESSED(2, 204))
+	
+		if (!PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_Y))
 		{
 			bLocal_36 = false;
 			fLocal_38 = 0f;
 		}
+	
 		if (!bLocal_36 == bLocal_37)
 		{
 			bLocal_37 = bLocal_36;
@@ -262,21 +291,25 @@ void func_1(int iParam0)
 			GRAPHICS::SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(fLocal_38);
 			GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
 		}
-		if (PAD::IS_CONTROL_JUST_PRESSED(2, 201))
+	
+		if (PAD::IS_CONTROL_JUST_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_ACCEPT))
 		{
 			bLocal_39 = true;
 			fLocal_41 = 1f;
 		}
-		if (PAD::IS_CONTROL_PRESSED(2, 201))
+	
+		if (PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_ACCEPT))
 		{
 			bLocal_39 = true;
 			fLocal_41 = 1f;
 		}
-		if (!PAD::IS_CONTROL_PRESSED(2, 201))
+	
+		if (!PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_ACCEPT))
 		{
 			bLocal_39 = false;
 			fLocal_41 = 0f;
 		}
+	
 		if (!bLocal_39 == bLocal_40)
 		{
 			bLocal_40 = bLocal_39;
@@ -285,21 +318,25 @@ void func_1(int iParam0)
 			GRAPHICS::SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT(fLocal_41);
 			GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
 		}
-		if (PAD::IS_CONTROL_JUST_PRESSED(2, 203))
+	
+		if (PAD::IS_CONTROL_JUST_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_X))
 		{
 			bLocal_42 = true;
 			fLocal_44 = 1f;
 		}
-		if (PAD::IS_CONTROL_PRESSED(2, 203))
+	
+		if (PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_X))
 		{
 			bLocal_42 = true;
 			fLocal_44 = 1f;
 		}
-		if (!PAD::IS_CONTROL_PRESSED(2, 203))
+	
+		if (!PAD::IS_CONTROL_PRESSED(FRONTEND_CONTROL, INPUT_FRONTEND_X))
 		{
 			bLocal_42 = false;
 			fLocal_44 = 0f;
 		}
+	
 		if (!bLocal_42 == bLocal_43)
 		{
 			bLocal_43 = bLocal_42;
@@ -309,172 +346,152 @@ void func_1(int iParam0)
 			GRAPHICS::END_SCALEFORM_MOVIE_METHOD();
 		}
 	}
+
+	return;
 }
 
-void func_2()
+void func_2() // Position - 0x43D (1085)
 {
-	if (CAM::DOES_CAM_EXIST(iLocal_17))
-	{
-		CAM::DESTROY_CAM(iLocal_17, false);
-	}
+	if (CAM::DOES_CAM_EXIST(caLocal_17))
+		CAM::DESTROY_CAM(caLocal_17, false);
+
 	CAM::RENDER_SCRIPT_CAMS(false, false, 3000, true, false, 0);
-	func_3(0);
+	func_3(false);
 	MISC::SET_GAME_PAUSED(false);
 	HUD::CLEAR_HELP(true);
 	GRAPHICS::SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(&iLocal_16);
 	SCRIPT::TERMINATE_THIS_THREAD();
+	return;
 }
 
-void func_3(bool bParam0)
+void func_3(BOOL bParam0) // Position - 0x47A (1146)
 {
 	if (bParam0)
 	{
 		func_10();
-		if (Global_21222.f_1 == 10 || Global_21222.f_1 == 9)
-		{
+	
+		if (Global_21239.f_1 == 10 || Global_21239.f_1 == 9)
 			MISC::SET_BIT(&Global_9076, 16);
-		}
-		Global_21222.f_1 = 1;
+	
+		Global_21239.f_1 = 1;
+	
 		if (func_9(0))
-		{
 			func_4(0);
-		}
 	}
-	else if (Global_21222.f_1 == 1)
+	else if (Global_21239.f_1 == 1)
 	{
-		if (!Global_21222.f_1 == 0)
-		{
-			Global_21222.f_1 = 3;
-		}
+		if (!(Global_21239.f_1 == 0))
+			Global_21239.f_1 = 3;
 	}
+
+	return;
 }
 
-void func_4(int iParam0)
+void func_4(int iParam0) // Position - 0x4DD (1245)
 {
 	if (func_8())
-	{
 		return;
-	}
-	if (Global_21444)
-	{
+
+	if (Global_21461)
 		if (func_7())
-		{
-			func_6(1, 1);
-		}
+			func_6(true, true);
 		else
-		{
-			func_6(0, 0);
-		}
-	}
-	if (Global_21222.f_1 == 10 || Global_21222.f_1 == 9)
-	{
+			func_6(false, false);
+
+	if (Global_21239.f_1 == 10 || Global_21239.f_1 == 9)
 		MISC::SET_BIT(&Global_9076, 16);
-	}
+
 	if (AUDIO::IS_MOBILE_PHONE_CALL_ONGOING())
-	{
 		AUDIO::STOP_SCRIPTED_CONVERSATION(false);
-	}
-	Global_22585 = 5;
+
+	Global_22602 = 5;
+
 	if (iParam0 == 1)
-	{
 		MISC::SET_BIT(&Global_9075, 30);
-	}
 	else
-	{
 		MISC::CLEAR_BIT(&Global_9075, 30);
-	}
+
 	if (!func_5())
-	{
-		Global_21222.f_1 = 3;
-	}
+		Global_21239.f_1 = 3;
+
+	return;
 }
 
-int func_5()
+BOOL func_5() // Position - 0x567 (1383)
 {
-	if (Global_21222.f_1 == 1 || Global_21222.f_1 == 0)
-	{
-		return 1;
-	}
-	return 0;
+	if (Global_21239.f_1 == 1 || Global_21239.f_1 == 0)
+		return true;
+
+	return false;
 }
 
-void func_6(bool bParam0, bool bParam1)
+void func_6(BOOL bParam0, BOOL bParam1) // Position - 0x58E (1422)
 {
 	if (bParam0)
 	{
 		if (func_9(0))
 		{
-			Global_21444 = 1;
+			Global_21461 = true;
+		
 			if (bParam1)
-			{
-				MOBILE::GET_MOBILE_PHONE_POSITION(&Global_21159);
-			}
-			Global_21150 = { Global_21168[Global_21167 /*3*/] };
-			MOBILE::SET_MOBILE_PHONE_POSITION(Global_21150);
+				MOBILE::GET_MOBILE_PHONE_POSITION(&Global_21176);
+		
+			Global_21167 = { Global_21185[Global_21184 /*3*/] };
+			MOBILE::SET_MOBILE_PHONE_POSITION(Global_21167);
 		}
 	}
-	else if (Global_21444 == 1)
+	else if (Global_21461 == true)
 	{
-		Global_21444 = 0;
-		Global_21150 = { Global_21175[Global_21167 /*3*/] };
+		Global_21461 = false;
+		Global_21167 = { Global_21192[Global_21184 /*3*/] };
+	
 		if (bParam1)
-		{
-			MOBILE::SET_MOBILE_PHONE_POSITION(Global_21159);
-		}
+			MOBILE::SET_MOBILE_PHONE_POSITION(Global_21176);
 		else
-		{
-			MOBILE::SET_MOBILE_PHONE_POSITION(Global_21150);
-		}
+			MOBILE::SET_MOBILE_PHONE_POSITION(Global_21167);
 	}
+
+	return;
 }
 
-bool func_7()
+BOOL func_7() // Position - 0x602 (1538)
 {
-	return BitTest(Global_1959772, 5);
+	return IS_BIT_SET(Global_1960332, 5);
 }
 
-bool func_8()
+BOOL func_8() // Position - 0x610 (1552)
 {
-	return BitTest(Global_1959772, 19);
+	return IS_BIT_SET(Global_1960332, 19);
 }
 
-int func_9(int iParam0)
+BOOL func_9(int iParam0) // Position - 0x61F (1567)
 {
 	if (iParam0 == 1)
-	{
-		if (Global_21222.f_1 > 3)
-		{
-			if (BitTest(Global_9075, 14))
-			{
-				return 1;
-			}
+		if (Global_21239.f_1 > 3)
+			if (IS_BIT_SET(Global_9075, 14))
+				return true;
 			else
-			{
-				return 0;
-			}
-		}
+				return false;
 		else
-		{
-			return 0;
-		}
-	}
+			return false;
+
 	if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("cellphone_flashhand")) > 0)
-	{
-		return 1;
-	}
-	if (Global_21222.f_1 > 3)
-	{
-		return 1;
-	}
-	return 0;
+		return true;
+
+	if (Global_21239.f_1 > 3)
+		return true;
+
+	return false;
 }
 
-void func_10()
+void func_10() // Position - 0x676 (1654)
 {
-	if (Global_21222.f_1 == 9 || Global_21222.f_1 == 10)
+	if (Global_21239.f_1 == 9 || Global_21239.f_1 == 10)
 	{
-		Global_22638 = 0;
-		Global_22634 = 1;
+		Global_22655 = 0;
+		Global_22651 = 1;
 	}
+
+	return;
 }
 

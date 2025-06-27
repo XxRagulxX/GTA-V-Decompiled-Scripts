@@ -15,7 +15,7 @@
 	var uLocal_13 = 0;
 	var uLocal_14 = 0;
 	int iLocal_15 = 0;
-	char* sLocal_16 = NULL;
+	char* sLocal_16 = 0;
 	var uLocal_17 = 0;
 	var uLocal_18 = 0;
 	var uLocal_19 = 0;
@@ -64,7 +64,7 @@
 	var uLocal_62 = 0;
 #endregion
 
-void __EntryFunction__()
+void main() // Position - 0x0 (0)
 {
 	iLocal_2 = 1;
 	iLocal_3 = 134;
@@ -90,130 +90,138 @@ void __EntryFunction__()
 	iLocal_39 = 65;
 	iLocal_40 = 49;
 	iLocal_41 = 64;
-	fLocal_61 = ((0.05f + 0.275f) - 0.01f);
+	fLocal_61 = (0.05f + 0.275f) - 0.01f;
 	func_12();
+
 	while (true)
 	{
-		SYSTEM::WAIT(0);
+		BUILTIN::WAIT(0);
+	
 		if (func_11())
-		{
 			return;
-		}
+	
 		func_1();
 	}
+
+	return;
 }
 
-void func_1()
+void func_1() // Position - 0xA2 (162)
 {
 	func_2();
+	return;
 }
 
-void func_2()
+void func_2() // Position - 0xAE (174)
 {
-	int iVar0;
-	int iVar1;
-	struct<2> Var2;
-	var uVar5;
-	
-	iVar0 = 0;
-	while (iVar0 < SCRIPT::GET_NUMBER_OF_EVENTS(2))
+	int i;
+	eEventType eventAtIndex;
+	eEventType type;
+	var unk3;
+
+	for (i = 0; i < SCRIPT::GET_NUMBER_OF_EVENTS(SCRIPT_EVENT_QUEUE_ERRORS); i = i + 1)
 	{
-		iVar1 = SCRIPT::GET_EVENT_AT_INDEX(2, iVar0);
-		if (func_10(iVar1))
+		eventAtIndex = SCRIPT::GET_EVENT_AT_INDEX(SCRIPT_EVENT_QUEUE_ERRORS, i);
+	
+		if (func_10(eventAtIndex))
 		{
-			func_9(&Var2);
-			func_8(2, iVar0, iVar1, &Var2);
-			Var2.f_1 = (MISC::GET_FRAME_COUNT() - 1);
-			Var2.f_0 = iVar1;
-			if (!func_7(&Var2, &uVar5))
-			{
-				func_6(&Var2);
-			}
-			func_3(&Var2);
+			func_9(&type);
+			func_8(SCRIPT_EVENT_QUEUE_ERRORS, i, eventAtIndex, &type);
+			type.f_1 = MISC::GET_FRAME_COUNT() - 1;
+			type = eventAtIndex;
+		
+			if (!func_7(&type, &unk3))
+				func_6(&type);
+		
+			func_3(&type);
 		}
-		iVar0++;
 	}
+
+	return;
 }
 
-void func_3(int iParam0)
+void func_3(var uParam0) // Position - 0x116 (278)
 {
-	int iVar0;
-	
-	iVar0 = *iParam0;
-	if (((func_5() && func_4(iVar0)) && iVar0 != 250) && NETWORK::NETWORK_CAN_BAIL())
-	{
+	eEventType type;
+
+	type = *uParam0;
+
+	if (_IS_FMMC_ACTIVE() && func_4(type) && type != EVENT_ERRORS_UNKNOWN_ERROR && NETWORK::NETWORK_CAN_BAIL())
 		NETWORK::NETWORK_BAIL(0, 1, 0);
-	}
+
+	return;
 }
 
-bool func_4(int iParam0)
+BOOL func_4(eEventType eetParam0) // Position - 0x14F (335)
 {
-	return (((iParam0 == 251 || iParam0 == 252) || iParam0 == 253) || iParam0 == 250);
+	return eetParam0 == EVENT_ERRORS_ARRAY_OVERFLOW || eetParam0 == EVENT_ERRORS_INSTRUCTION_LIMIT || eetParam0 == EVENT_ERRORS_STACK_OVERFLOW || eetParam0 == EVENT_ERRORS_UNKNOWN_ERROR;
 }
 
-bool func_5()
+BOOL _IS_FMMC_ACTIVE() // Position - 0x17D (381)
 {
-	return Global_1845225[PLAYER::PLAYER_ID() /*874*/].f_185 != 0;
+	return Global_1845274[PLAYER::PLAYER_ID() /*877*/].f_185 != 0;
 }
 
-int func_6(int iParam0)
+int func_6(var uParam0) // Position - 0x194 (404)
 {
-	if (Global_33560.f_61 < 20)
+	if (Global_33577.f_61 < 20)
 	{
-		Global_33560[Global_33560.f_61 /*3*/] = { *iParam0 };
-		Global_33560.f_61++;
+		Global_33577[Global_33577.f_61 /*3*/] = { *uParam0 };
+		Global_33577.f_61 = Global_33577.f_61 + 1;
 		return 1;
 	}
+
 	return 0;
 }
 
-int func_7(int iParam0, var uParam1)
+BOOL func_7(var uParam0, var uParam1) // Position - 0x1C7 (455)
 {
 	*uParam1 = 0;
 	*uParam1 = 0;
-	while (*uParam1 < Global_33560.f_61)
+
+	while (*uParam1 < Global_33577.f_61)
 	{
-		if (Global_33560[*uParam1 /*3*/] == *iParam0 && Global_33560[*uParam1 /*3*/].f_2 == iParam0->f_2)
-		{
-			return 1;
-		}
-		*uParam1++;
-	}
-	return 0;
-}
-
-void func_8(int iParam0, int iParam1, int iParam2, var uParam3)
-{
-	var uVar0;
+		if (Global_33577[*uParam1 /*3*/] == *uParam0 && Global_33577[*uParam1 /*3*/].f_2 == uParam0->f_2)
+			return true;
 	
-	if (((iParam2 == 250 || iParam2 == 251) || iParam2 == 252) || iParam2 == 253)
-	{
-		if (SCRIPT::GET_EVENT_DATA(iParam0, iParam1, &uVar0, 1))
-		{
-			uParam3->f_2 = uVar0;
-		}
+		*uParam1 = *uParam1 + 1;
 	}
+
+	return false;
 }
 
-void func_9(var uParam0)
+void func_8(eEventGroup eegParam0, int iParam1, eEventType eetParam2, var uParam3) // Position - 0x215 (533)
+{
+	var eventData;
+
+	if (eetParam2 == EVENT_ERRORS_UNKNOWN_ERROR || eetParam2 == EVENT_ERRORS_ARRAY_OVERFLOW || eetParam2 == EVENT_ERRORS_INSTRUCTION_LIMIT || eetParam2 == EVENT_ERRORS_STACK_OVERFLOW)
+		if (SCRIPT::GET_EVENT_DATA(eegParam0, iParam1, &eventData, 1))
+			uParam3->f_2 = eventData;
+
+	return;
+}
+
+void func_9(var uParam0) // Position - 0x25A (602)
 {
 	*uParam0 = -1;
 	uParam0->f_1 = -1;
 	uParam0->f_2 = -1;
+	return;
 }
 
-bool func_10(int iParam0)
+BOOL func_10(eEventType eetParam0) // Position - 0x270 (624)
 {
-	return func_4(iParam0);
+	return func_4(eetParam0);
 }
 
-int func_11()
+BOOL func_11() // Position - 0x27E (638)
 {
-	return 0;
+	return false;
 }
 
-void func_12()
+void func_12() // Position - 0x287 (647)
 {
 	MISC::NETWORK_SET_SCRIPT_IS_SAFE_FOR_NETWORK_GAME();
+	return;
 }
 
