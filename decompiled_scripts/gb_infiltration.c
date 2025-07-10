@@ -77395,24 +77395,24 @@ void func_714(int iParam0, bool bParam1, int iParam2, int iParam3, int iParam4, 
 
 void func_715(int iParam0)
 {
-	func_92(&Global_1984716, 0, 0);
+	func_92(&Global_1984717, 0, 0);
 	if (iParam0 != -1)
 	{
-		Global_1984716.f_2 = iParam0;
+		Global_1984717.f_2 = iParam0;
 	}
 	else
 	{
-		Global_1984716.f_2 = Global_262145.f_36598;
+		Global_1984717.f_2 = Global_262145.f_36598;
 	}
 }
 
 int func_716(int iParam0)
 {
-	if (Global_1984720 == -2)
+	if (Global_1984721 == -2)
 	{
 		return 0;
 	}
-	if (Global_1984720 == iParam0)
+	if (Global_1984721 == iParam0)
 	{
 		return 0;
 	}
@@ -451264,7 +451264,7 @@ void func_8270()
 {
 	struct<4> Var0;
 	
-	Global_1984716 = { Var0 };
+	Global_1984717 = { Var0 };
 }
 
 void func_8271()

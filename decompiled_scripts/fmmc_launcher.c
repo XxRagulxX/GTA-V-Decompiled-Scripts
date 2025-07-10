@@ -445614,7 +445614,7 @@ void func_7397(int iParam0, var uParam1, bool bParam2, int iParam3, int iParam4,
 				}
 			}
 		}
-		if ((!(iParam0->f_42 && func_1252(PLAYER::PLAYER_ID(), 1, 1)) || (Global_1945923.f_3825 && (((func_35(Global_4718592.f_131616) || func_3891(Global_4718592.f_131616)) || func_6444(Global_4718592.f_131616)) || func_6342()))) && (!func_4909() || Global_1984723))
+		if ((!(iParam0->f_42 && func_1252(PLAYER::PLAYER_ID(), 1, 1)) || (Global_1945923.f_3825 && (((func_35(Global_4718592.f_131616) || func_3891(Global_4718592.f_131616)) || func_6444(Global_4718592.f_131616)) || func_6342()))) && (!func_4909() || Global_1984724))
 		{
 			func_6367(0);
 			HUD::BEGIN_TEXT_COMMAND_BUSYSPINNER_ON("");
@@ -615886,7 +615886,7 @@ void func_10504(var uParam0, int iParam1, var uParam2, int iParam3, bool bParam4
 		func_10517(uParam2);
 		return;
 	}
-	if (iParam1 == 3 && Global_1984721)
+	if (iParam1 == 3 && Global_1984722)
 	{
 		if (uParam0->f_929 == 96)
 		{

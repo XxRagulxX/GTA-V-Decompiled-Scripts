@@ -217,7 +217,7 @@ void __EntryFunction__()
 	Global_1983955 = 0.95f;
 	Global_1984704 = -1;
 	Global_1984706 = -1;
-	Global_1984720 = -1;
-	Global_1984721 = 1;
+	Global_1984721 = -1;
+	Global_1984722 = 1;
 }
 

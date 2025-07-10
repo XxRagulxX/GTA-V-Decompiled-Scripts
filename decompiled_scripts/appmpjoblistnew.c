@@ -64033,7 +64033,7 @@ int func_824()
 	{
 		return 0;
 	}
-	if (Global_1984716.f_3)
+	if (Global_1984717.f_3)
 	{
 		return 0;
 	}
@@ -64041,9 +64041,9 @@ int func_824()
 	{
 		return 0;
 	}
-	if (func_827(&Global_1984716))
+	if (func_827(&Global_1984717))
 	{
-		return func_825(&Global_1984716, Global_1984716.f_2, 0);
+		return func_825(&Global_1984717, Global_1984717.f_2, 0);
 	}
 	return 0;
 }

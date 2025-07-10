@@ -712454,7 +712454,7 @@ void func_12541()
 {
 	struct<4> Var0;
 	
-	Global_1984716 = { Var0 };
+	Global_1984717 = { Var0 };
 }
 
 void func_12542()

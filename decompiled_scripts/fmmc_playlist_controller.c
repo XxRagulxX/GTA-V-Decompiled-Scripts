@@ -213073,7 +213073,7 @@ void func_2099(struct<17> Param0, var uParam17, var uParam18, var uParam19, var 
 	{
 		func_2130();
 		bLocal_2803 = false;
-		if (!Global_1984722)
+		if (!Global_1984723)
 		{
 			func_1976();
 			func_1974();
