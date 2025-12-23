@@ -1,3 +1,0 @@
-H:/GTAV-Decompiler/build/CMakeFiles/GTAV-Decompiler.dir
-H:/GTAV-Decompiler/build/CMakeFiles/ALL_BUILD.dir
-H:/GTAV-Decompiler/build/CMakeFiles/ZERO_CHECK.dir
