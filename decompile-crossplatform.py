@@ -11,66 +11,89 @@ PROC_LIMIT = 20
 OUT_DIR = "decompiled_scripts"
 NATIVE_TABLES_DIR = "native_tables"
 SCRIPTS_DIR = "scripts"
+DECOMPILER_DIR = "decompiler"
 
-DECOMPILER_EXE = "decompiler.exe"
-WINE_BINARY = "wine"      # change to "wine64" if required
+DECOMPILER_EXE = "Decompiler.exe"
+WINE_BINARY = "wine"
 TIMEOUT = 300
 
 ALL_SCRIPTS_FILE = "all_script_names.txt"
 # =================================================
 
-# Detect OS
 SYSTEM = platform.system().lower()
 IS_WINDOWS = SYSTEM == "windows"
-IS_LINUX = SYSTEM == "linux"
 
-# Ensure output directories exist
-os.makedirs(OUT_DIR, exist_ok=True)
-os.makedirs(NATIVE_TABLES_DIR, exist_ok=True)
+BASE_DIR = Path(__file__).resolve().parent
+DECOMPILER_PATH = BASE_DIR / DECOMPILER_DIR / DECOMPILER_EXE
+
+Path(OUT_DIR).mkdir(exist_ok=True)
+Path(NATIVE_TABLES_DIR).mkdir(exist_ok=True)
 
 # -------------------------------------------------
 # Discover scripts
 # -------------------------------------------------
-scripts_to_decompile = []
-for entry in os.listdir(SCRIPTS_DIR):
-    if entry.endswith("_ysc"):
-        scripts_to_decompile.append(entry[:-4])  # remove "_ysc"
+all_scripts = sorted(
+    entry[:-4] for entry in os.listdir(SCRIPTS_DIR) if entry.endswith("_ysc")
+)
 
-scripts_to_decompile = sorted(scripts_to_decompile)
+# -------------------------------------------------
+# Resume mode: skip already decompiled scripts
+# -------------------------------------------------
+scripts_to_decompile = []
+skipped_scripts = []
+
+for script in all_scripts:
+    c_out = Path(OUT_DIR) / f"{script}.c"
+    native_out = Path(NATIVE_TABLES_DIR) / f"{script}.txt"
+
+    if c_out.exists() and native_out.exists():
+        skipped_scripts.append(script)
+    else:
+        scripts_to_decompile.append(script)
+
 total_scripts = len(scripts_to_decompile)
 failed_scripts = []
 
 # -------------------------------------------------
-# Write all script names to file
+# Write all script names (full list)
 # -------------------------------------------------
 with open(ALL_SCRIPTS_FILE, "w", encoding="utf-8") as f:
-    for script in scripts_to_decompile:
+    for script in all_scripts:
         f.write(f"{script}\n")
 
 # -------------------------------------------------
 # Helpers
 # -------------------------------------------------
 def build_decompiler_command(ysc_path: Path):
-    """
-    Build platform-specific decompiler command.
-    """
     if IS_WINDOWS:
-        return [DECOMPILER_EXE, str(ysc_path)]
-    else:
-        return [WINE_BINARY, DECOMPILER_EXE, str(ysc_path)]
+        return [str(DECOMPILER_PATH), str(ysc_path)]
+    return [WINE_BINARY, str(DECOMPILER_PATH), str(ysc_path)]
+
+def cleanup_generated_files(script_folder: Path, script: str):
+    leftovers = [
+        script_folder / f"{script}.ysc.full.c",
+        script_folder / f"{script}.ysc.full native table.txt",
+    ]
+    for f in leftovers:
+        if f.exists():
+            try:
+                f.unlink()
+            except Exception:
+                pass
 
 def decompile_script(script):
     script_folder = Path(SCRIPTS_DIR) / f"{script}_ysc"
     ysc_full_path = script_folder / f"{script}.ysc.full"
 
     if not ysc_full_path.exists():
-        return (script, False, "Missing .ysc.full file")
+        return (script, False, "Missing .ysc.full")
 
     cmd = build_decompiler_command(ysc_full_path)
 
     try:
         result = subprocess.run(
             cmd,
+            cwd=DECOMPILER_PATH.parent,
             capture_output=True,
             text=True,
             timeout=TIMEOUT
@@ -79,12 +102,12 @@ def decompile_script(script):
         if result.returncode != 0:
             return (script, False, result.stderr.strip() or "Decompiler failed")
 
-        # Move generated .c file
+        # Move .c output
         src_c = script_folder / f"{script}.ysc.full.c"
         dest_c = Path(OUT_DIR) / f"{script}.c"
 
         if not src_c.exists():
-            return (script, False, "Missing .c output file")
+            return (script, False, "Missing .c output")
 
         dest_c.unlink(missing_ok=True)
         shutil.move(src_c, dest_c)
@@ -99,6 +122,7 @@ def decompile_script(script):
         dest_native.unlink(missing_ok=True)
         shutil.move(src_native, dest_native)
 
+        cleanup_generated_files(script_folder, script)
         return (script, True, "")
 
     except subprocess.TimeoutExpired:
@@ -110,9 +134,17 @@ def decompile_script(script):
 # Main
 # -------------------------------------------------
 def main():
-    print(f"Detected OS : {platform.system()}")
-    print(f"Total scripts: {total_scripts}")
-    print(f"Parallel workers: {PROC_LIMIT}\n")
+    print(f"OS                : {platform.system()}")
+    print(f"Decompiler path   : {DECOMPILER_PATH}")
+    print(f"Total scripts     : {len(all_scripts)}")
+    print(f"Skipped (resume)  : {len(skipped_scripts)}")
+    print(f"To decompile      : {total_scripts}")
+    print(f"Workers           : {PROC_LIMIT}\n")
+
+    if skipped_scripts:
+        print("Skipped scripts (already done):")
+        print(", ".join(skipped_scripts[:10]) + (" ..." if len(skipped_scripts) > 10 else ""))
+        print()
 
     with ThreadPoolExecutor(max_workers=PROC_LIMIT) as executor:
         futures = {
@@ -131,8 +163,8 @@ def main():
 
     if failed_scripts:
         print("\nFailed scripts:")
-        for script, reason in failed_scripts:
-            print(f" - {script}: {reason}")
+        for s, r in failed_scripts:
+            print(f" - {s}: {r}")
     else:
         print("All scripts decompiled successfully.")
 
